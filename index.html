@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio Profesional | Lintang Rizky</title>
+    
+    <!-- LINK KURSOR ANIMASI PETIR FUCHSIA DARI GAMBAR KASIH -->
+    <!-- Fuchsia Electricity Lightning - https://www.cursors-4u.com/cursor/fuchsia-electricity-lightning -->
+    <link rel="stylesheet" href="https://cdn.cursors-4u.net/cursors/animated/fuchsia-electricity-lightning-aa355a3c-32.css">
+    <!-- End www.Cursors-4U.com Code -->
+
     <style>
         /* --- RESET & BASE STYLING --- */
         * { 
@@ -12,42 +18,12 @@
             box-sizing: border-box; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
-        
-        /* Menghilangkan kursor asli bawaan laptop/PC */
-        html, body, a, button, .skills span, .project-item {
-            cursor: none !important;
-        }
 
         body { 
             background-color: #0f0c1b; 
             color: #e0e0e0; 
             line-height: 1.6; 
             overflow-x: hidden;
-        }
-        
-        /* --- STYLING CUSTOM MOUSE CURSOR --- */
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            background: rgba(162, 155, 254, 0.3); /* Warna ungu transparan */
-            border: 2px solid #a29bfe; /* Garis tepi kursor */
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none; /* Supaya tidak mengganggu klik */
-            z-index: 10000; /* Di atas elemen apa pun */
-            /* Efek transisi halus saat kursor membesar/mengecil */
-            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-                        height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-                        background-color 0.3s ease;
-        }
-
-        /* Efek kursor membesar saat diarahkan ke elemen interaktif */
-        .custom-cursor.hovered {
-            width: 45px;
-            height: 45px;
-            background: rgba(162, 155, 254, 0.15);
-            border-color: #ffffff;
         }
         
         /* --- STYLING WELCOME SCREEN (PRELOADER) --- */
@@ -214,10 +190,7 @@
 </head>
 <body>
 
-    <!-- 1. ELEMEN KURSOR KUSTOM -->
-    <div class="custom-cursor"></div>
-
-    <!-- 2. WELCOME SCREEN ANIMASI -->
+    <!-- WELCOME SCREEN ANIMASI -->
     <div id="preloader">
         <div class="welcome-box">
             <div class="icon-group">
@@ -229,7 +202,7 @@
         </div>
     </div>
 
-    <!-- 3. ISI KONTEN PORTFOLIO -->
+    <!-- ISI KONTEN PORTFOLIO -->
     <header>
         <h1>Lintang Rizky Maulana</h1>
         <p>Web Developer & Tech Enthusiast</p>
@@ -278,32 +251,9 @@
         <p>&copy; 2026 Lintang Rizky. Built with GitHub Pages.</p>
     </footer>
 
-    <!-- 4. LOGIKA JAVASCRIPT (PRELOADER & MOUSE CURSOR) -->
+    <!-- LOGIKA JAVASCRIPT HILANGKAN PRELOADER -->
     <script>
-        // --- LOGIKA MOUSE CURSOR ---
-        const cursor = document.querySelector('.custom-cursor');
-
-        // Menggerakkan kursor kustom sesuai koordinat mouse asli
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Seleksi semua elemen yang kalau disentuh membuat kursor membesar
-        const hoverElements = document.querySelectorAll('a, button, .skills span, .project-item');
-        
-        hoverElements.forEach(elem => {
-            elem.addEventListener('mouseenter', () => {
-                cursor.classList.add('hovered');
-            });
-            elem.addEventListener('mouseleave', () => {
-                cursor.classList.remove('hovered');
-            });
-        });
-
-        // --- LOGIKA HILANGKAN PRELOADER ---
         window.addEventListener('DOMContentLoaded', () => {
-            // Delay 2.8 detik biar animasinya keliatan dulu sebelum geser ke atas
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.classList.add('fade-out');
