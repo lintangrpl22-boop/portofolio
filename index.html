@@ -12,11 +12,42 @@
             box-sizing: border-box; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
+        
+        /* Menghilangkan kursor asli bawaan laptop/PC */
+        html, body, a, button, .skills span, .project-item {
+            cursor: none !important;
+        }
+
         body { 
-            background-color: #0f0c1b; /* Background utama gelap biar sinkron dengan welcome screen */
+            background-color: #0f0c1b; 
             color: #e0e0e0; 
             line-height: 1.6; 
             overflow-x: hidden;
+        }
+        
+        /* --- STYLING CUSTOM MOUSE CURSOR --- */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: rgba(162, 155, 254, 0.3); /* Warna ungu transparan */
+            border: 2px solid #a29bfe; /* Garis tepi kursor */
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none; /* Supaya tidak mengganggu klik */
+            z-index: 10000; /* Di atas elemen apa pun */
+            /* Efek transisi halus saat kursor membesar/mengecil */
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        background-color 0.3s ease;
+        }
+
+        /* Efek kursor membesar saat diarahkan ke elemen interaktif */
+        .custom-cursor.hovered {
+            width: 45px;
+            height: 45px;
+            background: rgba(162, 155, 254, 0.15);
+            border-color: #ffffff;
         }
         
         /* --- STYLING WELCOME SCREEN (PRELOADER) --- */
@@ -26,8 +57,8 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: #130f26; /* Warna ungu gelap pekat sesuai video */
-            z-index: 9999; /* Tetap di paling atas menutupi konten lain */
+            background-color: #130f26; 
+            z-index: 9999; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,7 +69,6 @@
             text-align: center;
         }
 
-        /* Grup Ikon Bulat */
         .icon-group {
             display: flex;
             justify-content: center;
@@ -63,12 +93,10 @@
             animation: fadeInIcon 0.6s ease forwards;
         }
 
-        /* Efek kemunculan ikon bergantian */
         .mini-icon:nth-child(1) { animation-delay: 0.2s; }
         .mini-icon:nth-child(2) { animation-delay: 0.4s; }
         .mini-icon:nth-child(3) { animation-delay: 0.6s; }
 
-        /* Teks Welcome */
         .welcome-text {
             color: white;
             font-size: 2.8rem;
@@ -77,16 +105,15 @@
             opacity: 0;
             transform: scale(0.85);
             animation: welcomeBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            animation-delay: 1s; /* Muncul setelah animasi ikon selesai */
+            animation-delay: 1s; 
         }
 
         .welcome-text span {
-            color: #a29bfe; /* Warna ungu aksen terang */
+            color: #a29bfe; 
         }
 
-        /* Class pemicu dari JavaScript untuk transisi keluar */
         #preloader.fade-out {
-            transform: translateY(-100%); /* Geser ke atas keluar layar sesuai video */
+            transform: translateY(-100%); 
             opacity: 0;
             visibility: hidden;
         }
@@ -187,7 +214,10 @@
 </head>
 <body>
 
-    <!-- 1. HALAMAN ANIMASI KEDATANGAN (WELCOME SCREEN) -->
+    <!-- 1. ELEMEN KURSOR KUSTOM -->
+    <div class="custom-cursor"></div>
+
+    <!-- 2. WELCOME SCREEN ANIMASI -->
     <div id="preloader">
         <div class="welcome-box">
             <div class="icon-group">
@@ -199,7 +229,7 @@
         </div>
     </div>
 
-    <!-- 2. KONTEN UTAMA PORTFOLIO -->
+    <!-- 3. ISI KONTEN PORTFOLIO -->
     <header>
         <h1>Lintang Rizky Maulana</h1>
         <p>Web Developer & Tech Enthusiast</p>
@@ -248,10 +278,32 @@
         <p>&copy; 2026 Lintang Rizky. Built with GitHub Pages.</p>
     </footer>
 
-    <!-- 3. SCRIPT LOGIKA OTOMATIS HILANG -->
+    <!-- 4. LOGIKA JAVASCRIPT (PRELOADER & MOUSE CURSOR) -->
     <script>
+        // --- LOGIKA MOUSE CURSOR ---
+        const cursor = document.querySelector('.custom-cursor');
+
+        // Menggerakkan kursor kustom sesuai koordinat mouse asli
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Seleksi semua elemen yang kalau disentuh membuat kursor membesar
+        const hoverElements = document.querySelectorAll('a, button, .skills span, .project-item');
+        
+        hoverElements.forEach(elem => {
+            elem.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovered');
+            });
+            elem.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovered');
+            });
+        });
+
+        // --- LOGIKA HILANGKAN PRELOADER ---
         window.addEventListener('DOMContentLoaded', () => {
-            // Memberikan waktu durasi 2.8 detik agar animasi welcome screen selesai berjalan
+            // Delay 2.8 detik biar animasinya keliatan dulu sebelum geser ke atas
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.classList.add('fade-out');
